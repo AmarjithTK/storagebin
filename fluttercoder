@@ -1,0 +1,37 @@
+
+#!/bin/bash
+
+# Check if the operating system is Arch Linux or Ubuntu
+if cat /etc/os-release | grep -i "NAME" | grep -i "Arch Linux"; then
+    # Install Docker on Arch Linux
+    sudo pacman -Syu
+    sudo pacman -S docker
+    sudo systemctl start docker.service
+    sudo systemctl enable docker.service
+elif cat /etc/os-release | grep -i "NAME" | grep -i "Ubuntu"; then
+    # Install Docker on Ubuntu
+    sudo apt-get update
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+    sudo systemctl start docker
+    sudo systemctl enable docker
+fi
+
+# Install Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/{VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+# Add the current non-root user to the docker group
+sudo groupadd docker
+sudo usermod -aG docker $USER
+
+mkdir -p /home/$USER/flutter-cdr/config
+
+docker run \
+-u $(id -u):$(id -g) \
+-p 9801:8080 \
+--restart unless-stopped \
+-v /home/$USER/flutter-cdr/config:/home/fluttercoder/.local/share/code-server/User/workspace/tinder:z \
+-v /home/$USER/flutter-cdr/config:/home/fluttercoder/.local/share/code-server/config \
+sonunigam4097/flutter-cdr:v3.0
+
+
