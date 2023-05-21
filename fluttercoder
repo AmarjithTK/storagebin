@@ -2,13 +2,13 @@
 #!/bin/bash
 
 # Check if the operating system is Arch Linux or Ubuntu
-if cat /etc/os-release | grep -i "NAME" | grep -i "Arch Linux"; then
+if cat /etc/os-release | grep -i "ID_LIKE" | grep -i "arch"; then
     # Install Docker on Arch Linux
-    sudo pacman -Syu
-    sudo pacman -S docker
+    # sudo pacman -Syu
+    sudo pacman -S --noconfirm docker
     sudo systemctl start docker.service
     sudo systemctl enable docker.service
-elif cat /etc/os-release | grep -i "NAME" | grep -i "Ubuntu"; then
+elif cat /etc/os-release | grep -i "NAME" | grep -i "debian"; then
     # Install Docker on Ubuntu
     sudo apt-get update
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io
@@ -28,12 +28,12 @@ mkdir -p /home/$USER/flutter-cdr/config
 mkdir -p /home/$USER/flutter-cdr/projects
 
 
-docker run \
--u $(id -u):$(id -g) \
+docker run --privileged \
 -p 9801:8080 \
+-v /dev/bus/usb:/dev/bus/usb  \
 --restart unless-stopped \
 -v /home/$USER/flutter-cdr/projects:/home/fluttercoder/.local/share/code-server/User/workspace/tinder:z \
--v /home/$USER/flutter-cdr/config:/home/fluttercoder/.local/share/code-server/config \
-sonunigam4097/flutter-cdr:v3.0
+-v /home/$USER/flutter-cdr/config:/home/fluttercoder/.local/share/code-server/config:z \
+sonunigam4097/flutter-cdr:v3.1
 
 
