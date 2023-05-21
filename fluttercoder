@@ -11,7 +11,7 @@ if cat /etc/os-release | grep -i "ID_LIKE" | grep -i "arch"; then
 elif cat /etc/os-release | grep -i "NAME" | grep -i "debian"; then
     # Install Docker on Ubuntu
     sudo apt-get update
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+    sudo apt-get install -y docker-ce docker-ce-cli containerd
     sudo systemctl start docker
     sudo systemctl enable docker
 fi
