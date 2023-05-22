@@ -1,14 +1,16 @@
-
 #!/bin/bash
 
 # Check if the operating system is Arch Linux or Ubuntu
 if cat /etc/os-release | grep -i "ID_LIKE" | grep -i "arch"; then
     # Install Docker on Arch Linux
     # sudo pacman -Syu
-    sudo pacman -S --noconfirm docker xorg-xhost
+    sudo pacman -S --noconfirm docker xorg-xhost docker-compose
 
     sudo systemctl start docker.service
     sudo systemctl enable docker.service
+
+    # Install Python and pip
+    sudo pacman -S python python-pip
 elif cat /etc/os-release | grep -i "ID_LIKE" | grep -i "debian"; then
     # Install Docker on Ubuntu
     sudo apt-get update
@@ -16,11 +18,19 @@ elif cat /etc/os-release | grep -i "ID_LIKE" | grep -i "debian"; then
 
     sudo systemctl start docker
     sudo systemctl enable docker
+
+    # Install Python and pip
+    # FROM ubuntu:18.04
+
+    # RUN apt-get update && \
+    #     apt-get install -y software-properties-common gcc && \
+    #     add-apt-repository -y ppa:deadsnakes/ppa && \
+    #     apt-get update && \
+    #     apt-get install -y python3.6 python3-distutils python3-pip python3-apt
 fi
 
-# Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/{VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+# Install Docker Compose using pip
+sudo pip install docker-compose
 
 # Add the current non-root user to the docker group
 sudo groupadd docker
@@ -54,4 +64,3 @@ docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.
 # -v /home/$USER/flutter-cdr/projects:/home/fluttercoder/.local/share/code-server/User/workspace/tinder:z \
 # -v /home/$USER/flutter-cdr/config:/home/fluttercoder/.local/share/code-server/config:z \
 # sonunigam4097/flutter-cdr:v3.1
-
