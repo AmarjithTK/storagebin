@@ -5,13 +5,15 @@
 if cat /etc/os-release | grep -i "ID_LIKE" | grep -i "arch"; then
     # Install Docker on Arch Linux
     # sudo pacman -Syu
-    sudo pacman -S --noconfirm docker
+    sudo pacman -S --noconfirm docker xorg-xhost
+
     sudo systemctl start docker.service
     sudo systemctl enable docker.service
-elif cat /etc/os-release | grep -i "NAME" | grep -i "debian"; then
+elif cat /etc/os-release | grep -i "ID_LIKE" | grep -i "debian"; then
     # Install Docker on Ubuntu
     sudo apt-get update
-    sudo apt-get install -y docker-ce docker-ce-cli containerd
+    sudo apt-get install -y docker-ce docker-ce-cli containerd xorg x11-xserver-utils
+
     sudo systemctl start docker
     sudo systemctl enable docker
 fi
@@ -28,12 +30,28 @@ mkdir -p /home/$USER/flutter-cdr/config
 mkdir -p /home/$USER/flutter-cdr/projects
 
 
-docker run -d --name  --privileged \
--p 9801:8080 \
--v /dev/bus/usb:/dev/bus/usb  \
---restart unless-stopped \
--v /home/$USER/flutter-cdr/projects:/home/fluttercoder/.local/share/code-server/User/workspace/tinder:z \
--v /home/$USER/flutter-cdr/config:/home/fluttercoder/.local/share/code-server/config:z \
-sonunigam4097/flutter-cdr:v3.1
+xhost +SI:localuser:$(whoami)
 
+
+docker run -d --name fluttercoder2 --privileged \
+    -p 9801:8080 \
+    -v /dev/bus/usb:/dev/bus/usb \
+    --network=host \
+    --restart unless-stopped \
+    -v /tmp/.X11-unix:/tmp/.X11-unix \
+    -v $HOME/.Xauthority:/home/fluttercoder/.Xauthority \
+    -e DISPLAY=$DISPLAY \
+    -v /home/$USER/flutter-cdr/projects:/home/fluttercoder/.local/share/code-server/User/workspace/tinder:z \
+    -v /home/$USER/flutter-cdr/config:/home/fluttercoder/.local/share/code-server/config:z \
+    sonunigam4097/flutter-cdr:v4.0
+
+docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
+
+# docker run -d --name  --privileged \
+# -p 9801:8080 \
+# -v /dev/bus/usb:/dev/bus/usb  \
+# --restart unless-stopped \
+# -v /home/$USER/flutter-cdr/projects:/home/fluttercoder/.local/share/code-server/User/workspace/tinder:z \
+# -v /home/$USER/flutter-cdr/config:/home/fluttercoder/.local/share/code-server/config:z \
+# sonunigam4097/flutter-cdr:v3.1
 
