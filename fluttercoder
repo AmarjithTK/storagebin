@@ -28,7 +28,7 @@ mkdir -p /home/$USER/flutter-cdr/config
 mkdir -p /home/$USER/flutter-cdr/projects
 
 
-docker run --privileged \
+docker run -d --name  --privileged \
 -p 9801:8080 \
 -v /dev/bus/usb:/dev/bus/usb  \
 --restart unless-stopped \
