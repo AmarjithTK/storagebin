@@ -1,0 +1,14 @@
+#!/bin/bash
+# Change the directory to the Platform Tools folder
+
+# Set the TCP port and restart ADB in TCP mode
+adb tcpip 5555
+sleep 4
+# Find the IP address of the connected device
+device_ip=$(adb shell ip route | awk "{print \$9}")
+echo $device_ip
+# Connect to the device over WiFi
+adb connect "$device_ip":5555
+
+# List the connected devices
+adb devices
