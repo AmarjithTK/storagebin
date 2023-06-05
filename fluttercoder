@@ -50,7 +50,8 @@ docker run -d --name fluttercoder2 --privileged \
     sonunigam4097/flutter-cdr:v4.0
 
 
-read -p "Do you want to install Portainer, a program to manage your containers? (y/n)" choice
+echo "Do you want to install Portainer, a program to manage your containers such as the fluttercoder? (y/n) " 
+read choice
 if [[ "$choice" =~ ^[Yy]$ ]]; then
     docker run -d -p 9000:9000 --name portainer --restart always -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
     echo "Portainer installed , now go to http://localhost:9000 to set portainer password, you must do it immediately"
