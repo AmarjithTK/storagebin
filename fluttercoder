@@ -39,7 +39,6 @@ xhost +SI:localuser:$(whoami)
 
 
 docker run -d --name fluttercoder2 --privileged \
-    # -p 9801:8080 \
     -v /dev/bus/usb:/dev/bus/usb \
     --network=host \
     --restart unless-stopped \
