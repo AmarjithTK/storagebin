@@ -10,7 +10,8 @@ if cat /etc/os-release | grep -i "ID_LIKE" | grep -i "arch"; then
     sudo systemctl enable docker.service
 
     # Install Python and pip
-    sudo pacman -S python python-pip
+    # sudo pacman -S --noconfirm python python-pip
+
 elif cat /etc/os-release | grep -i "ID_LIKE" | grep -i "debian"; then
     # Install Docker on Ubuntu
     sudo apt-get update
@@ -21,17 +22,6 @@ elif cat /etc/os-release | grep -i "ID_LIKE" | grep -i "debian"; then
     sudo systemctl enable docker
     sudo apt install python3 python3-pip
     sudo pip3 install docker-compose
-
-
-
-
-    # Install Python and pip
-    # FROM ubuntu:18.04
-
-    # RUN apt-get update && \
-    #     apt-get install -y software-properties-common gcc && \
-    #     add-apt-repository -y ppa:deadsnakes/ppa && \
-    #     apt-get update && \
 fi
 
 # Install Docker Compose using pip
