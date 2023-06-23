@@ -38,7 +38,7 @@ mkdir -p /home/$USER/fluttercoder/projects
 xhost +SI:localuser:$(whoami)
 
 
-docker run -d --name fluttercoder2 --privileged \
+docker run -d --privileged \
     -v /dev/bus/usb:/dev/bus/usb \
     --network=host \
     --restart unless-stopped \
@@ -47,7 +47,7 @@ docker run -d --name fluttercoder2 --privileged \
     -e DISPLAY=$DISPLAY \
     -v /home/$USER/fluttercoder/projects:/home/fluttercoder/.local/share/code-server/User/workspace/tinder:z \
     -v /home/$USER/fluttercoder/config:/home/fluttercoder/.local/share/code-server/config:z \
-    sonunigam4097/flutter-cdr:v4.0
+    sonunigam4097/flutter-cdr:v5.0
 
 
 echo "Do you want to install Portainer, a program to manage your containers such as the fluttercoder? (y/n) " 
