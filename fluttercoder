@@ -47,7 +47,7 @@ docker run -d --privileged \
     -e DISPLAY=$DISPLAY \
     -v /home/$USER/fluttercoder/projects:/home/fluttercoder/.local/share/code-server/User/workspace/tinder:z \
     -v /home/$USER/fluttercoder/config:/home/fluttercoder/.local/share/code-server/config:z \
-    sonunigam4097/flutter-cdr:latest
+    starlighter4097/fluttercoder:latest
 
 
 echo "Do you want to install Portainer, a program to manage your containers such as the fluttercoder? (y/n) " 
