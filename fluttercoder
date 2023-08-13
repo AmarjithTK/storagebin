@@ -24,6 +24,13 @@ elif cat /etc/os-release | grep -i "ID_LIKE" | grep -i "debian"; then
     sudo pip3 install docker-compose
 fi
 
+
+# add fedora support
+# add check if docker group exists to avoid failure
+#
+#
+#
+
 # Install Docker Compose using pip
 
 # Add the current non-root user to the docker group
@@ -45,7 +52,7 @@ docker run -d --privileged \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -v $HOME/.Xauthority:/home/fluttercoder/.Xauthority \
     -e DISPLAY=$DISPLAY \
-    -v /home/$USER/fluttercoder/projects:/home/fluttercoder/.local/share/code-server/User/workspace/tinder:z \
+    -v /home/$USER/fluttercoder/projects:/home/fluttercoder/codespace:z \
     -v /home/$USER/fluttercoder/config:/home/fluttercoder/.local/share/code-server/config:z \
     starlighter4097/fluttercoder:latest
 
